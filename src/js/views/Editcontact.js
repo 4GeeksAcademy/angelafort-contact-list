@@ -1,21 +1,36 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Editcontact = () => {
-    const { actions } = useContext(Context); // Obtener las acciones del contexto
+    const { actions, store } = useContext(Context);
+    const { id } = useParams(); 
 
-    // Definir el estado para los datos del contacto a editar
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
 
-    // Función para manejar el envío del formulario y editar el contacto
+    const contactToEdit = store.contacts.find(contact => contact.id === parseInt(id));
+
+    useEffect(() => {
+        if (contactToEdit) {
+            setName(contactToEdit.name);
+            setPhone(contactToEdit.phone);
+            setEmail(contactToEdit.email);
+            setAddress(contactToEdit.address);
+        }
+    }, [contactToEdit]);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        actions.editContact(name, phone, email, address);
+        actions.editContact(id, name, phone, email, address);
+        redirect(); // aqui llamo a la función de redirección después de editar el contacto
     };
+
+    function redirect() {
+        window.location.href = "/"; // aqui redirjoe al usuario al home
+    }
 
     return (
         <div className="container mt-5">
@@ -68,10 +83,10 @@ export const Editcontact = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">Save</button>
+                <Link to="/">
+                    <p>or get back to contacts</p>
+                </Link>
             </form>
-            <Link to="/contacts">
-                <p>or get back to contacts</p>
-            </Link>
         </div>
     );
 };

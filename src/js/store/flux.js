@@ -12,14 +12,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                     background: "white",
                     initial: "white"
                 }
-            ]
+            ],
+            contacts: []
         },
+            
         actions: {
-            Getcontact: () => {
+            Getcontact: function(params, id) {
                 fetch("https://playground.4geeks.com/contact/agendas/angelafort/contacts")
                     .then(response => response.json())
-                    .then(data => {
+                    .then((data) => {
+                        if (params === id) {
                         setStore({ contacts: data.contacts });
+                    }
                     })
                     .catch(error => console.error(error));
             },
@@ -66,8 +70,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
             },
 
-            editContact: function(name, phone, email, address) {
-                fetch("https://playground.4geeks.com/contact/agendas/angelafort/contacts/${id}", {
+            editContact: function(id, name, phone, email, address) {
+                fetch(`https://playground.4geeks.com/contact/agendas/angelafort/contacts/${id}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
@@ -83,17 +87,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
-                })
-                .then(data => {
                     console.log("Contacto editado:", data);
+                    // Aquí podrías realizar alguna acción adicional si es necesario
                 })
                 .catch(error => {
                     console.error('Hubo un problema con la solicitud:', error);
                 });
             },
             
-
             
 
             exampleFunction: () => {

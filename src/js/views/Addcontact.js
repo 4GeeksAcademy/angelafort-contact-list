@@ -9,8 +9,9 @@ const Addcontact = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
 
-    const handleSaveContact = () => {
-        actions.createContact(name, phone, email, address);
+    const handleSaveContact = async () => {
+        await actions.createContact(name, phone, email, address);
+        actions.Getcontact(); // Recargar los contactos después de agregar uno nuevo
     };
 
     return (
@@ -61,7 +62,7 @@ const Addcontact = () => {
                 </div>
             </form>
             <Link to="/">
-            <button onClick={handleSaveContact} className="col-12 btn btn-primary">Save</button>
+                <button onClick={handleSaveContact} className="col-12 btn btn-primary">Save</button>
             </Link>
             <Link to="/">
                 <p>or get back to contacts</p>
@@ -69,4 +70,4 @@ const Addcontact = () => {
         </div>
     );
 };
-export default Addcontact
+export default Addcontact;

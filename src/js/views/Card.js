@@ -7,16 +7,16 @@ import { faMapMarkerAlt, faPhone, faEnvelope, faTrash, faEdit } from "@fortaweso
 
 const Card = () => {
     const { actions, store } = useContext(Context);
-    const [reload, setReload] = useState(false); // Estado para forzar la recarga de los contactos
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
-        actions.Getcontact(); // Llama a la acción para obtener los contactos al cargar el componente
-    }, [reload]); // Recargar los contactos cuando cambie el estado "reload"
+        actions.Getcontact();
+    }, [reload]); 
 
-    // Función para eliminar un contacto
+
     const handleDeleteContact = (id) => {
         actions.deleteContact(id);
-        setReload(!reload); // Cambia el estado para forzar la recarga de los contactos después de eliminar uno
+        setReload(!reload);
     };
 
     return (
@@ -41,22 +41,22 @@ const Card = () => {
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <h5 className="card-title m-0">{contact.name}</h5>
                                             <div className="text-right">
-                                                <Link to="Editcontact">
-                                                    <FontAwesomeIcon icon={faEdit} className="mx-3" style={{ cursor: 'pointer' }} />
+                                                <Link to={`/Editcontact/${contact.id}`}>
+                                                    <FontAwesomeIcon icon={faEdit} className="mx-3" style={{ cursor: 'pointer' }} size="md" />
                                                 </Link>
-                                                <FontAwesomeIcon icon={faTrash} className="mx-4" onClick={() => handleDeleteContact(contact.id)} style={{ cursor: 'pointer' }} />
+                                                <FontAwesomeIcon icon={faTrash} className="mx-4" onClick={() => handleDeleteContact(contact.id)} style={{ cursor: 'pointer' }} size="md" />
                                             </div>
                                         </div>
                                         <div className="float-start text-secondary">
-                                        <p>
-                                            <FontAwesomeIcon icon={faMapMarkerAlt} /> {contact.address}
-                                        </p>
-                                        <p>
-                                            <FontAwesomeIcon icon={faPhone} /> {contact.phone}
-                                        </p>
-                                        <p>
-                                            <FontAwesomeIcon icon={faEnvelope} /> {contact.email}
-                                        </p>
+                                            <p>
+                                                <FontAwesomeIcon icon={faMapMarkerAlt} /> {contact.address}
+                                            </p>
+                                            <p>
+                                                <FontAwesomeIcon icon={faPhone} /> {contact.phone}
+                                            </p>
+                                            <p>
+                                                <FontAwesomeIcon icon={faEnvelope} /> {contact.email}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
